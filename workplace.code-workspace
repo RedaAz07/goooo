@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"name": "workplace",
+			"path": "."
+		},
+		{
+			"name": "laravel_app",
+			"path": "../2eme annee/laravel_app"
+		},
+		{
+			"path": "../projet_meknes/projet_meknes"
+		},
+		{
+			"path": "../../../../xampp/htdocs/projet_stage"
+		},
+		{
+			"path": "../full-stackApp"
+		},
+		{
+			"path": "../2eme annee/react"
+		},
+		{
+			"path": "../project_gestion_meknes"
+		}
+	],
+	"settings": {}
+}

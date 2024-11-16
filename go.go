@@ -5,32 +5,81 @@ import (
 	"os"
 )
 
-func main() {
+func IntMatrix() [][]int {
 	args := os.Args[1:]
-
-	var matrix [][]string
-
+	var matrix [][]int
 	for _, arg := range args {
-		var row []string
+		var row []int
 		for i := 0; i < len(arg); i++ {
-			row = append(row, string(arg[i]))
+			if arg[i] == '.' {
+				row = append(row, 0)
+			} else {
+				num := int(arg[i] - '0')
+				row = append(row, num)
+			}
 		}
 		matrix = append(matrix, row)
 	}
+	return matrix
+}
 
-	for i := 0; i < len(matrix); i++ {
-		for j := 0; j < len(matrix[i]); j++ {
-			for l := 0; l <len(matrix[j]) ; l++ {
-				
-			}
-			for k := '0'; k <= '9'; k++ {
-				if matrix[i][j] == "."  &&   matrix[i][j] ==   matrix[i][k]  {
-					matrix[i][j] = string(i)
-				}
+func correctNbr(matrix [][]int, row, column, nbr int) bool {
+	// row
+	for i := 0; i < 9; i++ {
+		if matrix[row][i] == nbr {
+			return false
+		}
+	}
+
+	// column
+	for i := 0; i < 9; i++ {
+		if matrix[i][column] == nbr {
+			return false
+		}
+	}
+
+	// square
+	x := (column / 3) * 3
+	y := (row / 3) * 3
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			if matrix[y+i][x+j] == nbr {
+				return false
 			}
 		}
 	}
 
-	fmt.Println(matrix)
+	return true
 }
 
+func solution(matrix [][]int) bool {
+	for row := 0; row < 9; row++ {
+		for column := 0; column < 9; column++ {
+			if matrix[row][column] == 0 {
+				for nbr := 1; nbr <= 9; nbr++ {
+					if correctNbr(matrix, row, column, nbr) {
+						matrix[row][column] = nbr
+						if solution(matrix) {
+							return true
+						}
+						matrix[row][column] = 0
+					}
+				}
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func main() {
+	matrix := IntMatrix()
+	if solution(matrix) {
+		for i := 0; i < len(matrix); i++ {
+			
+			fmt.Println(matrix[i])
+		}
+	} else {
+		fmt.Println("ERROR")
+	}
+}
